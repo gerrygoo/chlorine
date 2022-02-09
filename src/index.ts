@@ -48,7 +48,7 @@ function selectUsingScale(candidates: number[], scale: number): number {
 	return candidates[idx]
 }
 
-function makeDrill(poolLength: number, drillLength: number): Drill {
+function makeDrill(poolLength: number, drillLength: number, endurance: number): Drill {
 	// the lap length is between poolLength and drillLength
 	// and is a multiple of poolLength
 	// and evenly divides drillLength
@@ -56,7 +56,7 @@ function makeDrill(poolLength: number, drillLength: number): Drill {
 	  .filter(interval => interval >= poolLength &&
 					 interval % poolLength == 0)
 	
-	const interval = selectUsingScale(possibleIntervals, 0.5)
+	const interval = selectUsingScale(possibleIntervals, endurance)
 
 	return {
 		interval,
@@ -101,14 +101,14 @@ function makeDrillDistance(poolSize:number, workoutDistance:number, remainingDis
 	return selectUsingScale(possibleDistances, scale)
 }
 
-function makeWorkout(pool: Pool, workoutDistance: number): Workout {
+function makeWorkout(pool: Pool, workoutDistance: number, endurance: number): Workout {
 	const drills: Drill[] = []
 	let remainingDistance = workoutDistance
 
 	while (remainingDistance > 0) {
-		const drillDistance = makeDrillDistance(pool.length, workoutDistance, remainingDistance, 0)
+		const drillDistance = makeDrillDistance(pool.length, workoutDistance, remainingDistance, endurance)
 
-		drills.push(makeDrill(pool.length, drillDistance))
+		drills.push(makeDrill(pool.length, drillDistance, endurance))
 
 		remainingDistance -= drillDistance
 	}
@@ -116,4 +116,27 @@ function makeWorkout(pool: Pool, workoutDistance: number): Workout {
 	return { drills }
 }
 
-console.log(makeWorkout({ length: 25, unit: 'm' }, 1500).drills)
+const form = document.querySelector('form')
+const result = document.getElementById('result')
+form.addEventListener('submit', event => {
+	event.preventDefault()
+
+	const {
+		0: {value: poolLengthStr},
+		1: {value: workoutDistanceStr},
+		2: {value: enduranceStr},
+	} = event.target
+
+	const workout = makeWorkout(
+			{
+				length: parseInt(poolLengthStr),
+				units: 'm'
+      },
+			parseInt(workoutDistanceStr),
+			parseInt(enduranceStr)/100
+		))
+
+	result.textContent = workout.drills
+	  .map(({ interval, reps }) => `${reps} of ${interval}`)
+		.join(', ')
+})
