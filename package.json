@@ -3,11 +3,14 @@
 		"src/"
 	],
 	"scripts": {
-		"start": "parcel serve src/index.html",
+		"start": "concurrently --kill-others \"yarn:watch\" \"yarn:serve\"",
+		"serve": "parcel serve src/index.html",
+		"watch": "tsc -p . --noEmit --watch",
 		"build": "parcel build src/index.html --public-url ./",
 		"deploy": "gh-pages -d dist"
 	},
 	"devDependencies": {
+		"concurrently": "^7.0.0",
 		"gh-pages": "^3.2.3",
 		"parcel": "^2.2.1",
 		"typescript": "^4.5.5"
