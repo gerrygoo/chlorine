@@ -1,0 +1,81 @@
+modifiers:
+  - desc: ladder up breathing interval lap
+  - desc: ladder up breathing interval overall
+  - desc: increase breathing interval by 1
+
+  - desc: decrease breathing interval
+    requires:
+      style:
+        - crawl
+
+  - desc: upward effort gradient lap
+  - desc: upward efford gradient overall
+  - desc: count strokes
+  - desc: ladder down stroke count
+  - desc: thumb head tap drill
+    requires:
+      style:
+        - crawl
+  - desc: superman drill
+    requires:
+      style:
+        - crawl
+        - back
+  - desc: catch up drill
+    requires:
+      gear:
+        - stick
+      style:
+        - crawl
+        - back
+  - desc: one arm drill
+  - desc: kick only
+  - desc: stroke only
+
+  - desc: wear fins
+    requires:
+      gear:
+        - fins
+  - desc: wear snorkel
+    requires:
+      gear:
+        - snorkel
+  - desc: wear pullboy
+    requires:
+      gear:
+        - pullboy
+  - desc: wear paddles
+    requires:
+      gear:
+        - paddles
+  - desc: use a board
+    requires:
+      gear:
+        - board
+    
+excercises:
+  - type : lap_swimming
+    instructions:
+      style: crawl
+      distance:
+        magnitude: 200
+        units: m
+      reps: 1
+      modifiers:
+        - desc: swim at a warm-up pace (0.5)
+  - type: lap_swimming
+    instructions:
+      style: crawl
+      distance:
+        magnitude: 200
+        units: m
+      modifiers:
+        - desc: do not breathe on the last 4 strokes before turning
+  - type: repetiton_set
+    instructions:
+      style: crawl
+      action: turn
+      coefficients:
+        - 4
+      modifiers:
+        - desc: do not breathe on the last 4 strokes before turning

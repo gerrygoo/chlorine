@@ -36,7 +36,7 @@ function gatherInputs(target: ParentTarget): SwimLibConfig {
 		6: {value: breastStr},
 		7: {value: flyStr},
 	} = target
-  
+
 	return {
 		pool: {
 			length: makeDistance(parseInt(poolLengthStr), 'm'),
